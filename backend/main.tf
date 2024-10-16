@@ -21,6 +21,10 @@ provider "azurerm" {
       recover_soft_deleted_key_vaults = true
     }
   }
+  subscription_id = "683886f5-1985-4666-a868-6e00a44de5bd"
+  client_id       = "6b067221-787a-4af1-9db4-23b857f8be83"
+  client_secret   = "k.t8Q~K5PUrDx~wuN5RHbFoOfdmk777o4B1naa~s"
+  tenant_id       = "dd606718-fb9d-4d8c-b04b-9b5143d2976c"
 }
 
 resource "random_string" "random_string" {
