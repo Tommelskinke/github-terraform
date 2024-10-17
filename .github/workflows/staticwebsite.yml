@@ -3,20 +3,24 @@ name: web
 on:
   push:
     paths:
-      - 'github-terraform/web/**'
+      - "github-terraform/web/**"
 
   workflow_dispatch:
     inputs:
       action_type:
-        description: 'What action should be performed? (apply/destroy)'
+        description: "What action should be performed? (apply/destroy)"
         required: true
-        default: 'apply'
+        default: "apply"
+        type: choice
+        options:
+          - "apply"
+          - "destroy"
 
 jobs:
   resourcegroups:
     runs-on: ubuntu-latest
 
-    name: 'web'
+    name: "web"
 
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -28,23 +32,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 'Terraform init'
+      - name: "Terraform init"
         id: init
         run: terraform init
         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: 'Terraform plan'
+      - name: "Terraform plan"
         id: plan
         run: terraform plan
         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: 'Terraform apply'
+      - name: "Terraform apply"
         if: github.event.inputs.action_type == 'apply'
         id: apply
         run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: 'Terraform destroy'
+      - name: "Terraform destroy"
         if: github.event.inputs.action_type == 'destroy'
         id: destroy
         run: terraform destroy -auto-approve
